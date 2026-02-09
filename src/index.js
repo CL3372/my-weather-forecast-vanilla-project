@@ -25,7 +25,7 @@ function refreshWeather(response) {
   windSpeedElement.innerHTML = `${response.data.wind.speed}km/h`;
   temperatureElement.innerHTML = Math.round(temperature);
 
-  console.log(response.data.condition.description);
+  getForecast(response.data.city);
 }
 
 function formatDate(date) {
@@ -59,7 +59,15 @@ function searchCity(city) {
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
-function displayForecast() {
+function getForecast(city) {
+  let apiKey = "aa9340df384978aa7t1a53a8fabcc2o1";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios(apiUrl).then(displayForecast);
+}
+
+function displayForecast(response) {
+  console.log(response.data);
+
   let days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
   let forecastHtml = "";
 
@@ -85,4 +93,3 @@ function displayForecast() {
 }
 
 searchCity("Lisbon");
-displayForecast();
